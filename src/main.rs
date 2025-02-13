@@ -12,10 +12,10 @@ fn seq() {
     let start = Instant::now();
     let numbers: Vec<i64> = (1..=1000).collect();
 
-    let mut result: Vec<f64> = vec![];
+    let mut result: Vec<i64> = vec![];
 
     for number in numbers {
-        result.push((number as f64).sqrt());
+        result.push( number * number * number );
     }
 
     let duration = start.elapsed();
@@ -27,11 +27,11 @@ async fn parallel() {
     let start = Instant::now();
     let numbers: Vec<i64> = (1..=1000).collect();
 
-    let mut result: Vec<f64> = vec![];
+    let mut result: Vec<i64> = vec![];
     let mut handles = Vec::new();
 
     for number in numbers {
-        handles.push(task::spawn(async move { (number as f64).sqrt() }));
+        handles.push(task::spawn(async move { number * number * number }));
     }
     
     for handle in handles {
